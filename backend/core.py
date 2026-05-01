@@ -26,13 +26,13 @@ def retrieve_context(query: str):
     """Retrieve relevant documentation to help answer user queries about LangChain."""
     # Retrieve top 4 most similar documents
     retrieved_docs = vectorstore.as_retriever().invoke(query, k=4)
-    
+
     # Serialize documents for the model
     serialized = "\n\n".join(
         (f"Source: {doc.metadata.get('source', 'Unknown')}\n\nContent: {doc.page_content}")
         for doc in retrieved_docs
     )
-    
+
     # Return both serialized content and raw documents
     return serialized, retrieved_docs
 
